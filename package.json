@@ -16,6 +16,7 @@
     "react-dom": "16.13.1",
     "react-reveal": "^1.2.2",
     "react-tappable": "^1.0.4",
-    "sass": "^1.26.5"
+    "sass": "^1.26.5",
+    "vercel": "^20.1.0"
   }
 }
