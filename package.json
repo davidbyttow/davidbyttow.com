@@ -1,0 +1,21 @@
+{
+  "name": "davidbyttow",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "create-react-class": "^15.6.3",
+    "next": "9.4.0",
+    "next-fonts": "^1.1.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-reveal": "^1.2.2",
+    "react-tappable": "^1.0.4",
+    "sass": "^1.26.5"
+  }
+}
