@@ -4,8 +4,9 @@ export default function handler(req, res) {
   res.end(
     JSON.stringify({
       title: 'Twisted Kingdom Test',
-      scene: 'impossiblegames/assetbundles/dlc01_scene',
-      deps: ['impossiblegames/assetbundles/dlc01_assets'],
+      thumbnailUrls: ['dlc01_thumbnail.png'],
+      scene: 'dlc01_scene',
+      deps: ['dlc01_assets'],
     }),
   )
 }
