@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Itinerary — Apr–Jul 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #DA291C;
+    --red-dark: #B01E0A;
+    --white: #FFFFFF;
+    --ink: #181818;
+    --black: #000000;
+    --gray-90: #303030;
+    --gray-60: #666666;
+    --gray-55: #969696;
+    --gray-50: #8F8F8F;
+    --gray-20: #D2D2D2;
+    --border: #CCCCCC;
+    --yellow: #FFF200;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'Inter', 'FerrariSans', Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Top banner — black cinematic bar */
+  .masthead {
+    background: var(--black);
+    color: var(--white);
+    padding: 28px 40px 24px;
+    border-bottom: 1px solid var(--black);
+  }
+  .masthead-inner {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  .brand {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .brand .mark {
+    color: var(--red);
+    font-weight: 700;
+    margin-right: 10px;
+  }
+  .meta-row {
+    display: flex;
+    gap: 32px;
+    align-items: flex-end;
+  }
+  .meta {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--gray-55);
+  }
+  .meta b {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--white);
+    letter-spacing: 0.08px;
+    margin-top: 4px;
+    text-transform: none;
+  }
+
+  /* Main editorial panel */
+  main {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 32px 40px 80px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 40px;
+  }
+
+  .section-title {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--gray-50);
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  /* Calendar grid */
+  .months {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 40px;
+  }
+  .month h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 2px;
+  }
+  .month .mo-sub {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--gray-55);
+    margin-bottom: 14px;
+  }
+  .month .mo-sub .sep { color: var(--gray-20); margin: 0 8px; }
+
+  .dow {
+    display: grid;
+    grid-template-columns: 32px repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 4px;
+  }
+  .dow div {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--gray-50);
+    padding: 6px 0;
+  }
+  .dow .wk-head { color: var(--gray-20); }
+
+  .weeks { display: flex; flex-direction: column; gap: 2px; }
+  .week {
+    display: grid;
+    grid-template-columns: 32px repeat(7, 1fr);
+    gap: 2px;
+  }
+  .wk-num {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--gray-20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+  }
+  .day {
+    aspect-ratio: 1 / 1;
+    border: 1px solid var(--gray-20);
+    border-radius: 2px;
+    padding: 6px 8px 10px;
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    position: relative;
+    min-height: 80px;
+  }
+  .day.empty { border: none; background: transparent; }
+  .day .num {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08px;
+    color: var(--gray-60);
+    line-height: 1;
+  }
+  .day .tag {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0;
+  }
+  .day .tag:empty { display: none; }
+  .day.weekend .num { color: var(--gray-55); }
+
+  /* Trip styling — flat color blocks, razor edges */
+  .day.trip { border-color: var(--ink); }
+  .day.trip .num { color: var(--ink); }
+  .day.trip .tag { color: var(--ink); font-weight: 700; }
+  .day.trip .bar {
+    position: absolute;
+    left: -1px; right: -1px; bottom: -1px;
+    height: 4px;
+  }
+
+  .c-dc     { background: #F4F4F4; }
+  .c-dc    .bar { background: #181818; }
+  .c-nyc    { background: #FFF5F4; }
+  .c-nyc   .bar { background: var(--red); }
+  .c-maine  { background: #F2F7F4; }
+  .c-maine .bar { background: #03904A; }
+  .c-sf     { background: #FFFBEA; }
+  .c-sf    .bar { background: #F6E500; }
+  .c-rv     { background: #F3F2FA; }
+  .c-rv    .bar { background: #6B5BD6; }
+  .c-sea    { background: #F0F7FA; }
+  .c-sea   .bar { background: #4C98B9; }
+
+  .day.start { border-left: 3px solid var(--ink); }
+  .day.today {
+    outline: 2px solid var(--red);
+    outline-offset: -2px;
+  }
+  .day.today .num::after {
+    content: "";
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--red);
+    border-radius: 50%;
+    margin-left: 4px;
+    transform: translateY(-1px);
+  }
+
+  /* Sidebar */
+  aside { display: flex; flex-direction: column; gap: 28px; }
+
+  .leg {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .leg li {
+    display: grid;
+    grid-template-columns: 16px 1fr auto;
+    gap: 10px;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-20);
+  }
+  .leg li:last-child { border-bottom: none; }
+  .leg .sw { width: 10px; height: 10px; border-radius: 2px; margin-top: 5px; }
+  .leg .nm {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.08px;
+  }
+  .leg .nm small {
+    display: block;
+    font-weight: 400;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-55);
+    margin-top: 2px;
+  }
+  .leg .dt {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--gray-60);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .leg .dt b {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ink);
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  /* Stats block */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .stat {
+    padding: 14px 0;
+    border-right: 1px solid var(--gray-20);
+  }
+  .stat:nth-child(2n) { border-right: none; padding-left: 16px; }
+  .stat:nth-child(2n-1) { padding-right: 16px; }
+  .stat .n {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .stat .l {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--gray-55);
+    margin-top: 6px;
+  }
+
+  /* Ribbon timeline */
+  .ribbon {
+    margin-top: 8px;
+  }
+  .ribbon-track {
+    display: flex;
+    height: 28px;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .ribbon-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--ink);
+    border-right: 1px solid var(--ink);
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ribbon-seg:last-child { border-right: none; }
+  .ribbon-scale {
+    display: flex;
+    margin-top: 6px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-55);
+    justify-content: space-between;
+  }
+
+  footer {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 24px 40px 40px;
+    border-top: 1px solid var(--gray-20);
+    display: flex;
+    justify-content: space-between;
+    color: var(--gray-55);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 1100px) {
+    main { grid-template-columns: 1fr; padding: 24px 20px 60px; gap: 32px; }
+    .months { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 640px) {
+    .masthead { padding: 18px 16px 16px; }
+    .masthead-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .brand { font-size: 18px; }
+    .meta-row { flex-wrap: wrap; gap: 14px 20px; }
+    .meta { font-size: 10px; }
+    .meta b { font-size: 13px; }
+    main { padding: 18px 10px 60px; }
+    footer { padding: 20px 16px 30px; flex-direction: column; gap: 6px; }
+
+    .dow { grid-template-columns: 0 repeat(7, 1fr); gap: 2px; }
+    .week { grid-template-columns: 0 repeat(7, 1fr); gap: 2px; }
+    .wk-num { display: none; }
+    .dow .wk-head { display: none; }
+    .day { min-height: 0; aspect-ratio: 1 / 1.05; padding: 3px 3px 6px; }
+    .day .num { font-size: 10px; }
+    .day .tag { font-size: 14px; letter-spacing: 0.2px; padding: 2px 0; }
+    .day .bar { height: 3px; }
+
+    .month h2 { font-size: 20px; }
+    .mo-sub { font-size: 10px; }
+    .leg li { grid-template-columns: 14px 1fr auto; }
+    .stat .n { font-size: 22px; }
+    .section-title { font-size: 10px; }
+  }
+  @media (max-width: 380px) {
+    .day .tag { font-size: 12px; }
+    .day .num { font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand"><span class="mark">D/B</span>Itinerary — Spring & Summer 2026</div>
+    <div class="meta-row">
+      <div class="meta">Window<b>Apr 12 — Jul 1</b></div>
+      <div class="meta">Legs<b>8</b></div>
+      <div class="meta">Total days<b>81</b></div>
+      <div class="meta">Today<b id="today-label">—</b></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <div class="section-title">The Calendar</div>
+    <div class="months" id="months"></div>
+  </section>
+
+  <aside>
+    <div>
+      <div class="section-title">Legend</div>
+      <ul class="leg" id="legend"></ul>
+    </div>
+
+    <div>
+      <div class="section-title">At a Glance</div>
+      <div class="stats">
+        <div class="stat"><div class="n">31</div><div class="l">Days in NYC</div></div>
+        <div class="stat"><div class="n">3</div><div class="l">NYC Stints</div></div>
+        <div class="stat"><div class="n">17</div><div class="l">Days West Coast</div></div>
+        <div class="stat"><div class="n">7</div><div class="l">Cities / Regions</div></div>
+        <div class="stat"><div class="n">6</div><div class="l">RV Days (WA)</div></div>
+        <div class="stat"><div class="n">7</div><div class="l">Days in Maine</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Compressed Ribbon</div>
+      <div class="ribbon">
+        <div class="ribbon-track" id="ribbon"></div>
+        <div class="ribbon-scale"><span>Apr 12</span><span>May</span><span>Jun</span><span>Jul 1</span></div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <div>D. Byttow — Personal Travel Calendar</div>
+  <div>Typography : Inter · Layout after Ferrari Editorial</div>
+</footer>
+
+<script>
+  const trips = [
+    { key: 'dc',    name: 'Washington, DC', cls: 'c-dc',    color: '#181818', start: '2026-04-12', end: '2026-04-18', note: 'Capitol week' },
+    { key: 'nyc1',  name: 'New York',       cls: 'c-nyc',   color: '#DA291C', start: '2026-04-19', end: '2026-05-10', note: 'Home base' },
+    { key: 'maine', name: 'Maine',          cls: 'c-maine', color: '#03904A', start: '2026-05-11', end: '2026-05-17', note: 'Coastal retreat' },
+    { key: 'nyc2',  name: 'New York',       cls: 'c-nyc',   color: '#DA291C', start: '2026-05-18', end: '2026-06-09', note: 'Home base' },
+    { key: 'sf',    name: 'San Francisco',  cls: 'c-sf',    color: '#C9A100', start: '2026-06-10', end: '2026-06-16', note: 'West coast swing' },
+    { key: 'rv',    name: 'Upstate WA (RV)',cls: 'c-rv',    color: '#6B5BD6', start: '2026-06-17', end: '2026-06-22', note: 'Road trip' },
+    { key: 'sea',   name: 'Seattle',        cls: 'c-sea',   color: '#4C98B9', start: '2026-06-23', end: '2026-06-30', note: 'Pacific NW' },
+    { key: 'nyc3',  name: 'New York',       cls: 'c-nyc',   color: '#DA291C', start: '2026-07-01', end: '2026-07-01', note: 'Return' },
+  ];
+
+  const tripShort = { dc: 'DC', nyc1: 'NYC', maine: 'ME', nyc2: 'NYC', sf: 'SF', rv: 'RV · WA', sea: 'SEA', nyc3: 'NYC' };
+
+  const parse = (d) => { const [y,m,day]=d.split('-').map(Number); return new Date(y, m-1, day); };
+  const fmt = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const DAY_MS = 86400000;
+  const daysBetween = (a,b) => Math.round((parse(b)-parse(a))/DAY_MS)+1;
+
+  const today = new Date(2026, 3, 15); // April 15, 2026
+
+  function tripFor(date) {
+    for (const t of trips) if (date >= parse(t.start) && date <= parse(t.end)) return t;
+    return null;
+  }
+  function isoWeek(d) {
+    const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+    const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+    return Math.ceil((((date - yearStart) / DAY_MS) + 1) / 7);
+  }
+
+  // Today label
+  document.getElementById('today-label').textContent =
+    today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  // Legend
+  const legendEl = document.getElementById('legend');
+  const uniqueLegs = trips;
+  uniqueLegs.forEach(t => {
+    const days = daysBetween(t.start, t.end);
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <span class="sw" style="background:${t.color}"></span>
+      <span class="nm">${t.name}<small>${t.note}</small></span>
+      <span class="dt">${fmt(parse(t.start))} – ${fmt(parse(t.end))}<b>${days} day${days>1?'s':''}</b></span>`;
+    legendEl.appendChild(li);
+  });
+
+  // Ribbon (proportional)
+  const ribbonEl = document.getElementById('ribbon');
+  const total = daysBetween('2026-04-12','2026-07-01');
+  trips.forEach(t => {
+    const len = daysBetween(t.start, t.end);
+    const seg = document.createElement('div');
+    seg.className = 'ribbon-seg';
+    seg.style.flex = `${len} 0 0`;
+    seg.style.background = t.cls === 'c-dc' ? '#E9E9E9'
+      : t.cls === 'c-nyc' ? '#FFCFCB'
+      : t.cls === 'c-maine' ? '#BFE3D0'
+      : t.cls === 'c-sf' ? '#FFF3A3'
+      : t.cls === 'c-rv' ? '#D7D1F0'
+      : t.cls === 'c-sea' ? '#C8E0EC'
+      : '#EEE';
+    seg.textContent = len > 3 ? tripShort[t.key] : '';
+    seg.title = `${t.name} · ${len} days`;
+    ribbonEl.appendChild(seg);
+  });
+
+  // Months
+  const monthsEl = document.getElementById('months');
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dowLabels = ['M','T','W','T','F','S','S']; // Monday-start for ISO week feel
+
+  function monthStats(year, m) {
+    let count = {};
+    const dim = new Date(year, m+1, 0).getDate();
+    for (let d = 1; d <= dim; d++) {
+      const t = tripFor(new Date(year, m, d));
+      if (t) count[t.key] = (count[t.key]||0)+1;
+    }
+    return Object.entries(count).map(([k,v]) => `${tripShort[k]} ${v}d`).join(' · ');
+  }
+
+  for (let m = 3; m <= 6; m++) {
+    const year = 2026;
+    const daysInMonth = new Date(year, m+1, 0).getDate();
+    const firstDow = (new Date(year, m, 1).getDay() + 6) % 7; // Mon=0
+
+    const month = document.createElement('div');
+    month.className = 'month';
+    month.innerHTML = `
+      <h2>${monthNames[m]} <span style="color:var(--gray-55);font-weight:400;">${year}</span></h2>
+      <div class="mo-sub">${daysInMonth} days<span class="sep">·</span>${monthStats(year,m) || 'no travel'}</div>
+      <div class="dow">
+        <div class="wk-head">Wk</div>
+        ${dowLabels.map(d=>`<div>${d}</div>`).join('')}
+      </div>
+      <div class="weeks"></div>`;
+
+    const weeksEl = month.querySelector('.weeks');
+    let d = 1;
+    let weekRow = null;
+    let col = 0;
+
+    const newWeek = (refDate) => {
+      weekRow = document.createElement('div');
+      weekRow.className = 'week';
+      const wk = document.createElement('div');
+      wk.className = 'wk-num';
+      wk.textContent = isoWeek(refDate);
+      weekRow.appendChild(wk);
+      weeksEl.appendChild(weekRow);
+      col = 0;
+    };
+
+    // First week — with leading empties
+    newWeek(new Date(year, m, 1));
+    for (let i = 0; i < firstDow; i++) {
+      const e = document.createElement('div');
+      e.className = 'day empty';
+      weekRow.appendChild(e); col++;
+    }
+
+    while (d <= daysInMonth) {
+      if (col === 7) newWeek(new Date(year, m, d));
+      const date = new Date(year, m, d);
+      const cell = document.createElement('div');
+      cell.className = 'day';
+      const dow = date.getDay();
+      if (dow === 0 || dow === 6) cell.classList.add('weekend');
+
+      const t = tripFor(date);
+      if (t) {
+        cell.classList.add('trip', t.cls);
+        if (date.getTime() === parse(t.start).getTime()) cell.classList.add('start');
+      }
+      if (date.getTime() === today.getTime()) cell.classList.add('today');
+
+      const tagLine = t ? tripShort[t.key] : '';
+      cell.innerHTML = `
+        <div class="num">${d}</div>
+        <div class="tag">${tagLine}</div>
+        ${t ? '<div class="bar"></div>' : ''}`;
+      weekRow.appendChild(cell);
+      col++; d++;
+    }
+    // trailing empties
+    while (col < 7) {
+      const e = document.createElement('div');
+      e.className = 'day empty';
+      weekRow.appendChild(e); col++;
+    }
+
+    monthsEl.appendChild(month);
+  }
+</script>
+</body>
+</html>
