@@ -172,12 +172,22 @@
     min-height: 80px;
   }
   .day.empty { border: none; background: transparent; }
+  .day-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1;
+  }
   .day .num {
     font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.08px;
     color: var(--gray-60);
+    line-height: 1;
+  }
+  .day .mark-emoji {
+    font-size: 14px;
     line-height: 1;
   }
   .day .tag {
@@ -406,6 +416,7 @@
       <div class="meta">Window<b>Apr 12 — Jul 1</b></div>
       <div class="meta">Legs<b>8</b></div>
       <div class="meta">Total days<b>81</b></div>
+      <div class="meta">Off<b>3 · 12 vac</b></div>
       <div class="meta">Today<b id="today-label">—</b></div>
     </div>
   </div>
@@ -421,6 +432,10 @@
     <div>
       <div class="section-title">Legend</div>
       <ul class="leg" id="legend"></ul>
+      <ul class="leg" style="margin-top: 8px;">
+        <li><span style="font-size:16px;">🏖️</span><span class="nm">Day off<small>Not working</small></span><span class="dt">3 days</span></li>
+        <li><span style="font-size:16px;">🌴</span><span class="nm">Vacation<small>Fully unplugged</small></span><span class="dt">12 days</span></li>
+      </ul>
     </div>
 
     <div>
@@ -464,12 +479,21 @@
 
   const tripShort = { dc: 'DC', nyc1: 'NYC', maine: 'ME', nyc2: 'NYC', sf: 'SF', rv: 'RV · WA', sea: 'SEA', nyc3: 'NYC' };
 
+  const offDays = ['2026-04-19', '2026-05-10', '2026-05-18'];
+  const vacations = [
+    { start: '2026-05-20', end: '2026-05-25', label: 'Vacation' },
+    { start: '2026-06-17', end: '2026-06-22', label: 'Vacation (WA)' },
+  ];
+
   const parse = (d) => { const [y,m,day]=d.split('-').map(Number); return new Date(y, m-1, day); };
   const fmt = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   const DAY_MS = 86400000;
   const daysBetween = (a,b) => Math.round((parse(b)-parse(a))/DAY_MS)+1;
+  const iso = (d) => d.toISOString().slice(0,10);
+  const isOffDay = (date) => offDays.includes(iso(date));
+  const isVacation = (date) => vacations.some(v => date >= parse(v.start) && date <= parse(v.end));
 
-  const today = new Date(2026, 3, 15); // April 15, 2026
+  const today = new Date(2026, 3, 16); // April 16, 2026
 
   function tripFor(date) {
     for (const t of trips) if (date >= parse(t.start) && date <= parse(t.end)) return t;
@@ -590,8 +614,17 @@
       if (date.getTime() === today.getTime()) cell.classList.add('today');
 
       const tagLine = t ? tripShort[t.key] : '';
+      const vac = isVacation(date);
+      const off = isOffDay(date);
+      const emoji = vac ? '🌴' : (off ? '🏖️' : '');
+      const emojiTitle = vac ? 'Vacation' : (off ? 'Day off' : '');
+      if (vac) cell.classList.add('vacation');
+      if (off) cell.classList.add('off');
       cell.innerHTML = `
-        <div class="num">${d}</div>
+        <div class="day-head">
+          <span class="num">${d}</span>
+          ${emoji ? `<span class="mark-emoji" title="${emojiTitle}">${emoji}</span>` : ''}
+        </div>
         <div class="tag">${tagLine}</div>
         ${t ? '<div class="bar"></div>' : ''}`;
       weekRow.appendChild(cell);
