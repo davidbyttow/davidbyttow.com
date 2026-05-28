@@ -1,25 +1,22 @@
 {
   "name": "davidbyttow",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": "22.x"
-  },
   "scripts": {
-    "dev": "NODE_OPTIONS=--openssl-legacy-provider next dev",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider next build",
-    "start": "next start"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
-    "create-react-class": "^15.6.3",
-    "next": "9.4.0",
-    "next-fonts": "^1.1.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-reveal": "^1.2.2",
-    "react-tappable": "^1.0.4",
-    "sass": "^1.26.5",
-    "vercel": "^20.1.0"
+    "next": "^16.2.6",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3"
   }
 }
