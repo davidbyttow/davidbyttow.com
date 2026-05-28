@@ -68,11 +68,11 @@ export default async function Snowflake() {
   return (
     <main style={mainStyle}>
       <div style={blockStyle}>
-        <div style={labelStyle}>Valuation</div>
+        <div style={labelStyle}>Current Value</div>
         <div style={valuationStyle}>{usd(valuation, false)}</div>
       </div>
       <div style={blockStyle}>
-        <div style={labelStyle}>SNOW</div>
+        <div style={labelStyle}>$SNOW</div>
         <div style={priceStyle}>{usd(price, true)}</div>
       </div>
       <div style={daysGridStyle}>
