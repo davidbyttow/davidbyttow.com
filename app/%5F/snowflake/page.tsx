@@ -75,6 +75,10 @@ export default async function Snowflake() {
         <div style={labelStyle}>$SNOW</div>
         <div style={priceStyle}>{usd(price, true)}</div>
       </div>
+      <div style={blockStyle}>
+        <div style={labelStyle}>10-Day Avg</div>
+        <div style={avgStyle}>{usd(average, true)}</div>
+      </div>
       <div style={daysGridStyle}>
         {days.map((d) => (
           <div key={d.date} style={dayCellStyle}>
@@ -122,6 +126,13 @@ const valuationStyle: CSSProperties = {
   letterSpacing: "-0.03em",
   lineHeight: 1,
   color: "#1b7a3d",
+};
+
+const avgStyle: CSSProperties = {
+  fontSize: "clamp(1.75rem, 6vw, 3.5rem)",
+  fontWeight: 700,
+  letterSpacing: "-0.02em",
+  lineHeight: 1,
 };
 
 const daysGridStyle: CSSProperties = {
