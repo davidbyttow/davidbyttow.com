@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-// Closing prices for the last 8 known trading days of May 2026.
-// May 25 is Memorial Day (market closed). The final two trading days
-// (May 28, 29) are unknown and extrapolated from the current price.
+// Closing prices for the known trading days of May 2026.
+// May 25 is Memorial Day (market closed). May 29 is the only remaining
+// trading day and is extrapolated from the current price.
 const KNOWN_CLOSES = [
   { date: "May 15", close: 157.47 },
   { date: "May 18", close: 164.24 },
@@ -20,10 +20,11 @@ const KNOWN_CLOSES = [
   { date: "May 22", close: 172.2 },
   { date: "May 26", close: 177.6 },
   { date: "May 27", close: 175.26 },
+  { date: "May 28", close: 239.2 },
 ];
-const EXTRAPOLATED_DATES = ["May 28", "May 29"];
+const EXTRAPOLATED_DATES = ["May 29"];
 const POSITION_USD = 9_300_000;
-const FALLBACK_PRICE = 175.26;
+const FALLBACK_PRICE = 239.2;
 
 async function getCurrentPrice(): Promise<number> {
   try {
