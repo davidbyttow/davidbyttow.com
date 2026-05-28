@@ -10,18 +10,19 @@ export const dynamic = "force-dynamic";
 
 // Closing prices for the last 8 known trading days of May 2026.
 // May 25 is Memorial Day (market closed). The final two trading days
-// (May 28, 29) are unknown and use the current price instead.
-const KNOWN_MAY_CLOSES = [
-  157.47, // May 15
-  164.24, // May 18
-  169.55, // May 19
-  166.97, // May 20
-  165.54, // May 21
-  172.2, // May 22
-  177.6, // May 26
-  175.26, // May 27
+// (May 28, 29) are unknown and extrapolated from the current price.
+const KNOWN_CLOSES = [
+  { date: "May 15", close: 157.47 },
+  { date: "May 18", close: 164.24 },
+  { date: "May 19", close: 169.55 },
+  { date: "May 20", close: 166.97 },
+  { date: "May 21", close: 165.54 },
+  { date: "May 22", close: 172.2 },
+  { date: "May 26", close: 177.6 },
+  { date: "May 27", close: 175.26 },
 ];
-const POSITION_USD = 6_200_000;
+const EXTRAPOLATED_DATES = ["May 28", "May 29"];
+const POSITION_USD = 9_300_000;
 const FALLBACK_PRICE = 175.26;
 
 async function getCurrentPrice(): Promise<number> {
@@ -50,29 +51,50 @@ function usd(n: number, cents: boolean): string {
 
 export default async function Snowflake() {
   const price = await getCurrentPrice();
-  const tenDay = [...KNOWN_MAY_CLOSES, price, price];
-  const average = tenDay.reduce((sum, p) => sum + p, 0) / tenDay.length;
+
+  const days = [
+    ...KNOWN_CLOSES.map((d) => ({ ...d, extrapolated: false })),
+    ...EXTRAPOLATED_DATES.map((date) => ({
+      date,
+      close: price,
+      extrapolated: true,
+    })),
+  ];
+
+  const average = days.reduce((sum, d) => sum + d.close, 0) / days.length;
   const shares = POSITION_USD / average;
   const valuation = shares * price;
 
   return (
     <main style={mainStyle}>
       <div style={blockStyle}>
-        <div style={labelStyle}>SNOW</div>
-        <div style={priceStyle}>{usd(price, true)}</div>
-      </div>
-      <div style={blockStyle}>
         <div style={labelStyle}>Valuation</div>
         <div style={valuationStyle}>{usd(valuation, false)}</div>
       </div>
+      <div style={blockStyle}>
+        <div style={labelStyle}>SNOW</div>
+        <div style={priceStyle}>{usd(price, true)}</div>
+      </div>
+      <div style={daysGridStyle}>
+        {days.map((d) => (
+          <div key={d.date} style={dayCellStyle}>
+            <div style={dayDateStyle}>
+              {d.date}
+              {d.extrapolated ? "*" : ""}
+            </div>
+            <div style={dayCloseStyle}>{usd(d.close, true)}</div>
+          </div>
+        ))}
+      </div>
+      <div style={footnoteStyle}>* extrapolated from current price</div>
     </main>
   );
 }
 
 const mainStyle: CSSProperties = {
   flexDirection: "column",
-  gap: "4rem",
-  padding: "2rem",
+  gap: "3rem",
+  padding: "3rem 2rem",
 };
 
 const blockStyle: CSSProperties = {
@@ -99,4 +121,39 @@ const valuationStyle: CSSProperties = {
   fontWeight: 700,
   letterSpacing: "-0.03em",
   lineHeight: 1,
+  color: "#1b7a3d",
+};
+
+const daysGridStyle: CSSProperties = {
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  gap: "1rem 1.75rem",
+  maxWidth: "640px",
+};
+
+const dayCellStyle: CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  minWidth: "64px",
+};
+
+const dayDateStyle: CSSProperties = {
+  fontSize: "0.65rem",
+  letterSpacing: "0.12em",
+  textTransform: "uppercase",
+  color: "#8a8576",
+  marginBottom: "0.25rem",
+};
+
+const dayCloseStyle: CSSProperties = {
+  fontSize: "1rem",
+  fontWeight: 600,
+};
+
+const footnoteStyle: CSSProperties = {
+  fontSize: "0.7rem",
+  letterSpacing: "0.05em",
+  color: "#a39e8e",
 };
