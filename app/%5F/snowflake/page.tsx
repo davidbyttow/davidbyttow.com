@@ -8,9 +8,8 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-// Closing prices for the known trading days of May 2026.
-// May 25 is Memorial Day (market closed). May 29 is the only remaining
-// trading day and is extrapolated from the current price.
+// Closing prices for the trading days of May 2026.
+// May 25 is Memorial Day (market closed). All closes are final.
 const KNOWN_CLOSES = [
   { date: "May 15", close: 157.47 },
   { date: "May 18", close: 164.24 },
@@ -21,10 +20,10 @@ const KNOWN_CLOSES = [
   { date: "May 26", close: 177.6 },
   { date: "May 27", close: 175.26 },
   { date: "May 28", close: 239.2 },
+  { date: "May 29", close: 255.55 },
 ];
-const EXTRAPOLATED_DATES = ["May 29"];
 const POSITION_USD = 9_300_000;
-const FALLBACK_PRICE = 239.2;
+const FALLBACK_PRICE = 255.55;
 
 async function getCurrentPrice(): Promise<number> {
   try {
@@ -53,14 +52,7 @@ function usd(n: number, cents: boolean): string {
 export default async function Snowflake() {
   const price = await getCurrentPrice();
 
-  const days = [
-    ...KNOWN_CLOSES.map((d) => ({ ...d, extrapolated: false })),
-    ...EXTRAPOLATED_DATES.map((date) => ({
-      date,
-      close: price,
-      extrapolated: true,
-    })),
-  ];
+  const days = KNOWN_CLOSES;
 
   const average = days.reduce((sum, d) => sum + d.close, 0) / days.length;
   const shares = POSITION_USD / average;
@@ -83,15 +75,11 @@ export default async function Snowflake() {
       <div style={daysGridStyle}>
         {days.map((d) => (
           <div key={d.date} style={dayCellStyle}>
-            <div style={dayDateStyle}>
-              {d.date}
-              {d.extrapolated ? "*" : ""}
-            </div>
+            <div style={dayDateStyle}>{d.date}</div>
             <div style={dayCloseStyle}>{usd(d.close, true)}</div>
           </div>
         ))}
       </div>
-      <div style={footnoteStyle}>* extrapolated from current price</div>
     </main>
   );
 }
@@ -164,8 +152,3 @@ const dayCloseStyle: CSSProperties = {
   fontWeight: 600,
 };
 
-const footnoteStyle: CSSProperties = {
-  fontSize: "0.7rem",
-  letterSpacing: "0.05em",
-  color: "#a39e8e",
-};
